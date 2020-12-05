@@ -40,7 +40,7 @@ public class AppsListActivity extends AppCompatActivity {
         List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(0);
 
 
-        //storing the name of all installed apps package names in a list
+        //storing the name of all installed apps names in a list
         List<String> appsPackageNames = new ArrayList<>();
 
         for(ApplicationInfo applicationInfo:applicationInfos) {
@@ -48,12 +48,15 @@ public class AppsListActivity extends AppCompatActivity {
 
             //checks if the app has a launcher
             if(intent!=null)
-            appsPackageNames.add(applicationInfo.packageName);
+                //get the app name by its package name , using these two methods
+            appsPackageNames.add(applicationInfo.loadLabel(packageManager)+"");
+            //appsPackageNames.add(packageManager.getApplicationLabel(applicationInfo)+"");
+
         }
 
-        //set an String ArrayAdapter to the listview that includes the list of installed apps packages names list
+        //set an String ArrayAdapter to the listview that includes the list of installed apps  names list
         ListView listView  = findViewById(R.id.listview);
 
-        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,appsPackageNames));
+        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,appsPackageNames));
     }
 }
