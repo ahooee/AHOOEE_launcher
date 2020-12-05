@@ -2,6 +2,7 @@ package ir.linuxian.ahooeelauncher.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -42,9 +43,13 @@ public class AppsListActivity extends AppCompatActivity {
         //storing the name of all installed apps package names in a list
         List<String> appsPackageNames = new ArrayList<>();
 
-        for(ApplicationInfo applicationInfo:applicationInfos)
-            appsPackageNames.add(applicationInfo.packageName);
+        for(ApplicationInfo applicationInfo:applicationInfos) {
+            Intent intent = packageManager.getLaunchIntentForPackage(applicationInfo.packageName);
 
+            //checks if the app has a launcher
+            if(intent!=null)
+            appsPackageNames.add(applicationInfo.packageName);
+        }
 
         //set an String ArrayAdapter to the listview that includes the list of installed apps packages names list
         ListView listView  = findViewById(R.id.listview);
